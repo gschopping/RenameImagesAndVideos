@@ -11,7 +11,11 @@ import java.util.regex.Pattern;
 
 public class ReadConfigYaml {
 
+    private String fileName;
     private final ArrayList<FileType> fileTypes;
+    private String pathForTimelaps = "^(Timelaps\\d+)$";
+    private String pathForGPS = "^(GPS\\d+)$";
+    private String pathForResults = "results";
 
     public static class FileType {
         private String fileType = "";
@@ -43,6 +47,7 @@ public class ReadConfigYaml {
     }
 
     public ReadConfigYaml(String configFile) throws Exception {
+        this.fileName = configFile;
         this.fileTypes = new ArrayList<>();
         int lineCount = 0;
         try {
@@ -50,6 +55,18 @@ public class ReadConfigYaml {
             Yaml yaml = new Yaml();
             Map config = yaml.load(input);
 //            retrieve values for config
+            if (config.get("config") != null) {
+                Map configSection = (Map) config.get("config");
+                if (configSection.get("pathTimelaps") != null) {
+                    pathForTimelaps = (String) configSection.get("pathTimelaps");
+                }
+                if (configSection.get("pathGPS") != null) {
+                    pathForGPS = (String) configSection.get("pathGPS");
+                }
+                if (configSection.get("pathResults") != null) {
+                    pathForResults = (String) configSection.get("pathResults");
+                }
+            }
 
             if (config.get("fileTypes") != null) {
                 ArrayList<Map> fileTypeArray = (ArrayList<Map>) config.get("fileTypes");
@@ -126,7 +143,7 @@ public class ReadConfigYaml {
             value = (String) item.get("datetime");
             fileType.setDateTime(value);
         }
-        if (item.get("timezonde") != null) {
+        if (item.get("timezone") != null) {
             value = (String) item.get("timezone");
             fileType.setTimeZone(value);
         }
@@ -159,13 +176,15 @@ public class ReadConfigYaml {
         this.fileTypes.add(fileType);
     }
 
+    public String getFileName() { return this.fileName; }
+
     public ArrayList<FileType> getFileTypes() {
         return this.fileTypes;
     }
 
-    public FileType getFileType(String extension) {
+    public FileType getFileType(String fileType) {
         for (FileType filetype : this.getFileTypes()) {
-            if (filetype.getExtension().equalsIgnoreCase(extension)) {
+            if (filetype.getFileType().equalsIgnoreCase(fileType)) {
                 return filetype;
             }
         }
@@ -173,7 +192,7 @@ public class ReadConfigYaml {
     }
 
     public String getRegexMedia(Boolean All) {
-        ArrayList<FileType> items = this.getFileTypes();
+        ArrayList<FileType> items = (ArrayList<FileType>) this.getFileTypes().clone();
         if (!All) {
             // remove all but isPhotoFormat filetypes
             items.removeIf(item -> !item.isPhotoFormat);
@@ -181,7 +200,7 @@ public class ReadConfigYaml {
 
         StringBuilder result = new StringBuilder("^(");
         for (int i = 0; i < items.size(); i++ ) {
-            result.append(".*\\\\.").append(items.get(i).extension);
+            result.append(".*\\.").append(items.get(i).extension);
             if (i < items.size()-1) {
                 result.append("|");
             }
@@ -190,5 +209,32 @@ public class ReadConfigYaml {
         return result.toString();
     }
 
+    public ArrayList<String> getTags() {
+        List<String> tags = new ArrayList<String>();
+        String item = null;
+        for (FileType fileType : getFileTypes()) {
+            item = fileType.getDateTime();
+            if (item != null && !item.isEmpty()) {
+                tags.add(item);
+            }
+            item = fileType.getTimeZone();
+            if (item != null && !item.isEmpty()) {
+                tags.add(item);
+            }
+            item = fileType.getGPSLatitude();
+            if (item != null && !item.isEmpty()) {
+                tags.add(item);
+            }
+            item = fileType.getGPSLongitude();
+            if (item != null && !item.isEmpty()) {
+                tags.add(item);
+            }
+        }
+        return new ArrayList<String>(new HashSet<>(tags));
+    }
+
+    public String getPathForTimelaps() { return this.pathForTimelaps; }
+    public String getPathForGPS() { return this.pathForGPS; }
+    public String getPathForResults() { return this.pathForResults; }
 
 }

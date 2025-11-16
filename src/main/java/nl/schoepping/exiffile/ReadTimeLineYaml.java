@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.yaml.snakeyaml.Yaml;
 
 public class ReadTimeLineYaml {
+    private String fileName;
     private Boolean Enabled = true;
     private Boolean AvoidNonAscii = true;
     private final List<TimeLine> timeLines;
@@ -104,6 +105,7 @@ public class ReadTimeLineYaml {
     }
 
     public ReadTimeLineYaml(String timeLineFile) throws Exception {
+        this.fileName = timeLineFile;
         this.timeLines = new ArrayList<>();
         int lineCount = 0;
         try {
@@ -288,11 +290,7 @@ public class ReadTimeLineYaml {
         return result;
     }
 
-    public Boolean getEnabled() {
-        return this.Enabled;
-    }
-
-    public Boolean getAvoidNonAscii() {
-        return this.AvoidNonAscii;
-    }
+    public Boolean getEnabled() { return this.Enabled; }
+    public Boolean getAvoidNonAscii() { return this.AvoidNonAscii; }
+    public String getFileName() { return this.fileName; }
 }

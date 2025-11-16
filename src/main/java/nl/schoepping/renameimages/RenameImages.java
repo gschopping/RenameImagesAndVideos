@@ -5,6 +5,7 @@ import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 
@@ -31,13 +32,17 @@ public class RenameImages {
             ReadConfigYaml readConfigYaml = new ReadConfigYaml(configFile);
 
             System.out.println("Home directory: " + System.getProperty("user.dir"));
+            System.out.println("Log4j.properties: " + System.getenv("log4j_properties"));
+            System.out.println("Max Aliases for collections: " + System.getenv("MAX_MAX_ALIASES_FOR_COLLECTIONS"));
             System.out.println("Configuration file: " + configFile);
             System.out.println("Timeline file: " + timelineFile);
             System.out.println("Start directory: " + startDirectory);
             System.out.println("Log Config file: " + logConfigFile);
 
             System.out.println("regexMedia: " + readConfigYaml.getRegexMedia(true));
-            ReadConfigYaml.FileType filetype = readConfigYaml.getFileType("jpg");
+            System.out.println("results: " + readConfigYaml.getPathForResults());
+            System.out.println("Tags: " + readConfigYaml.getTags());
+            ReadConfigYaml.FileType filetype = readConfigYaml.getFileType("JPEG");
             if (filetype != null) {
                 System.out.println("FileType: " + filetype.getFileType());
                 System.out.println("DateTime: " + filetype.getDateTime());
@@ -52,7 +57,7 @@ public class RenameImages {
             ReadTimeLineYaml readTimeLine = new ReadTimeLineYaml(timelineFile);
             if (readTimeLine.getEnabled()) {
                 System.out.println("timeline is enabled");
-                ReadTimeLineYaml.TimeLine timeline = readTimeLine.getTimeLine(LocalDateTime.of(2021, 12, 25, 13, 45, 23));
+                ReadTimeLineYaml.TimeLine timeline = readTimeLine.getTimeLine(LocalDateTime.of(2019, 4, 25, 13, 45, 23));
                 System.out.println("StartDate: " + timeline.getStartDate());
                 System.out.println("EndDate: " + timeline.getEndDate());
                 System.out.println("Title: " + timeline.getTitle());
@@ -67,6 +72,13 @@ public class RenameImages {
                 System.out.println("Description: " + timeline.getDescription());
                 System.out.println("Override: " + timeline.getOverride());
                 System.out.println("Keys: " + timeline.getKeys());
+
+                ReadFiles readFiles = new ReadFiles(readConfigYaml, startDirectory);
+                for (File file : readFiles.getFilesFromDirectory()) {
+                    ReadExif readExif = new ReadExif(readConfigYaml, file.getPath());
+                    System.out.println("==== " + file.getName() + " ====");
+                    System.out.println("CreateDateTime: " + readExif.getCreateDateTime());
+                }
                 log.info("Configuration file:\t{}", configFile);
                 log.info("Timeline file:\t{}", timelineFile);
                 log.info("Start directory:\t{}", startDirectory);
