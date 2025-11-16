@@ -51,8 +51,8 @@ public class ReadConfigYaml {
             Map config = yaml.load(input);
 //            retrieve values for config
 
-            if (config.get("filetypes") != null) {
-                ArrayList<Map> fileTypeArray = (ArrayList<Map>) config.get("filetypes");
+            if (config.get("fileTypes") != null) {
+                ArrayList<Map> fileTypeArray = (ArrayList<Map>) config.get("fileTypes");
                 for (Map fileTypeItem : fileTypeArray) {
                     lineCount++;
                     setFileType(fileTypeItem);
@@ -165,7 +165,7 @@ public class ReadConfigYaml {
 
     public FileType getFileType(String extension) {
         for (FileType filetype : this.getFileTypes()) {
-            if (filetype.getExtension().equals(extension)) {
+            if (filetype.getExtension().equalsIgnoreCase(extension)) {
                 return filetype;
             }
         }
@@ -181,7 +181,7 @@ public class ReadConfigYaml {
 
         StringBuilder result = new StringBuilder("^(");
         for (int i = 0; i < items.size(); i++ ) {
-            result.append("*\\.").append(items.get(i).extension);
+            result.append(".*\\\\.").append(items.get(i).extension);
             if (i < items.size()-1) {
                 result.append("|");
             }

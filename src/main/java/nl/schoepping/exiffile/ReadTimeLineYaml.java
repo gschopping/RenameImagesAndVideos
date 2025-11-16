@@ -35,19 +35,10 @@ public class ReadTimeLineYaml {
         private String instructions = "";
         private Boolean override = false;
 
-        public LocalDateTime getStartDate() {
-            return startDate;
-        }
-
+        public LocalDateTime getStartDate() { return startDate; }
         public LocalDateTime getEndDate() { return endDate; }
-
-        String getTitle() {
-            return title;
-        }
-
-        String getCountryCode() {
-            return countryCode;
-        }
+        public String getTitle() { return title; }
+        public String getCountryCode() { return countryCode; }
 
         public String getCountry() {
             if (! this.countryCode.isEmpty()) {
@@ -58,61 +49,25 @@ public class ReadTimeLineYaml {
             }
         }
 
-        String getProvince() {
-            return province;
-        }
-
-        String getCity() {
-            return city;
-        }
-
-        String getLocation() {
-            return location;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        String getAuthor() {
-            return author;
-        }
-
-        String getWebsite() {
-            return website;
-        }
-
-        public String getCopyright() {
-            return copyright;
-        }
-
-        String getComment() {
-            return comment;
-        }
-
-        String getKeys() {
-            return keys;
-        }
-
-        String getInstructions() {
-            return instructions;
-        }
-
-        Boolean getOverride() { return override; }
+        public String getProvince() { return province; }
+        public String getCity() { return city; }
+        public String getLocation() { return location; }
+        public String getDescription() { return description; }
+        public String getAuthor() { return author; }
+        public String getWebsite() { return website; }
+        public String getCopyright() { return copyright; }
+        public String getComment() { return comment; }
+        public String getKeys() { return keys; }
+        public String getInstructions() { return instructions; }
+        public Boolean getOverride() { return override; }
 
         void setStartDate(String startDate) throws ParseException {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            this.startDate = LocalDateTime.parse(startDate);
+            this.startDate = LocalDateTime.parse(startDate, formatter);
         }
 
-        void setEndDate(LocalDateTime endDate) {
-
-            this.endDate = endDate;
-        }
-
-        void setTitle(String title) {
-            this.title = title;
-        }
+        void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
+        void setTitle(String title) { this.title = title; }
 
         void setCountryCode(String countryCode) throws Exception {
             Locale obj = new Locale("", countryCode);
@@ -125,50 +80,17 @@ public class ReadTimeLineYaml {
             this.countryCode = obj.getCountry();
         }
 
-        void setCountry(String country) {
-            this.country = country;
-        }
-
-        void setProvince(String province) {
-            this.province = province;
-        }
-
-        void setCity(String city) {
-            this.city = city;
-        }
-
-        void setLocation(String location) {
-            this.location = location;
-        }
-
-        void setDescription(String description) {
-            this.description = description;
-        }
-
-        void setAuthor(String author) {
-            this.author = author;
-        }
-
-        void setWebsite(String website) {
-            this.website = website;
-        }
-
-        void setCopyRight(String copyright) {
-            this.copyright = copyright;
-        }
-
-        void setComment(String comment) {
-            this.comment = comment;
-        }
-
-        void setKeys(String keys) {
-            this.keys = keys;
-        }
-
-        void setInstructions(String instructions) {
-            this.instructions = instructions;
-        }
-
+        void setCountry(String country) { this.country = country; }
+        void setProvince(String province) { this.province = province; }
+        void setCity(String city) { this.city = city; }
+        void setLocation(String location) { this.location = location; }
+        void setDescription(String description) { this.description = description; }
+        void setAuthor(String author) { this.author = author; }
+        void setWebsite(String website) { this.website = website; }
+        void setCopyRight(String copyright) { this.copyright = copyright; }
+        void setComment(String comment) { this.comment = comment; }
+        void setKeys(String keys) { this.keys = keys; }
+        void setInstructions(String instructions) { this.instructions = instructions; }
         void setOverride(Boolean override) { this.override = override; }
     }
 
@@ -337,7 +259,7 @@ public class ReadTimeLineYaml {
         this.timeLines.add(timeline);
     }
 
-    private void setEnddate() {
+    private void setEndDate() {
         LocalDateTime date = null;
         for (int count = this.timeLines.size() - 1; count >= 0; count--) {
             if (count < this.timeLines.size() - 1) {
@@ -349,7 +271,7 @@ public class ReadTimeLineYaml {
 
     public List<TimeLine> getTimeLines() {
         this.timeLines.sort(new SortByDate());
-        setEnddate();
+        setEndDate();
         return this.timeLines;
     }
 
