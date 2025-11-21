@@ -157,7 +157,7 @@ public class WriteExif {
         }
     }
 
-    void setCopyright(String copyright) {
+    public void setCopyright(String copyright) {
         if (! copyright.isEmpty()) {
             String[] tags = new String[3];
             tags[0] = "EXIF:Copyright";
@@ -167,7 +167,7 @@ public class WriteExif {
         }
     }
 
-    void setComment(String comment) {
+    public void setComment(String comment) {
         if (! comment.isEmpty()) {
             String[] tags = new String[2];
             tags[0] = "EXIF:UserComment";
@@ -195,7 +195,7 @@ public class WriteExif {
         }
     }
 
-    void setProvince(String province) {
+    public void setProvince(String province) {
         if (! province.isEmpty()) {
             String[] tags = new String[2];
             tags[0] = "XMP:State";
@@ -212,7 +212,7 @@ public class WriteExif {
         }
     }
 
-    void setLocation(String location) {
+    public void setLocation(String location) {
         if (! location.isEmpty()) {
             String[] tags = new String[2];
             tags[0] = "IPTC:Sub-location";
@@ -232,7 +232,7 @@ public class WriteExif {
         }
     }
 
-    void setURL(String url) {
+    public void setURL(String url) {
         if (! url.isEmpty()) {
             String[] tags = new String[2];
             tags[0] = "XMP:BaseURL";
@@ -241,7 +241,7 @@ public class WriteExif {
         }
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         if (! description.isEmpty()) {
             String[] tags = new String[3];
             tags[0] = "XMP:Headline";
@@ -271,7 +271,7 @@ public class WriteExif {
         }
     }
 
-    void setSpecialInstructions(String specialInstructions) {
+    public void setSpecialInstructions(String specialInstructions) {
         if (! specialInstructions.isEmpty()) {
             String[] tags = new String[2];
             tags[0] = "IPTC:SpecialInstructions";

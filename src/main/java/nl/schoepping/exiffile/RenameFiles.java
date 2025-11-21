@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class RenameFiles {
-    private Logger logger;
+    private final Logger logger;
     private final ReadTimeLineYaml timeLineYaml;
     private final ReadConfigYaml configYaml;
     private final String startDirectory;

@@ -36,14 +36,14 @@ public class ReadConfigYaml {
         public Boolean getIsWritable() { return isWritable; }
         public Boolean getIsPhotoFormat() { return isPhotoFormat; }
 
-        void setFileType(String fileType) { this.fileType = fileType; }
-        void setExtension(String extension) { this.extension = extension; }
-        void setDateTime(String dateTime) { this.dateTime = dateTime; }
-        void setTimeZone(String timeZone) { this.timeZone = timeZone; }
-        void setGPSLatitude(String gpsLatitude) { this.gpsLatitude = gpsLatitude; }
-        void setGPSLongitude(String gpsLongitude) { this.gpsLongitude = gpsLongitude; }
-        void setIsWritable(Boolean isWritable) { this.isWritable = isWritable; }
-        void setIsPhotoFormat(Boolean isPhotoFormat) { this.isPhotoFormat = isPhotoFormat; }
+        public void setFileType(String fileType) { this.fileType = fileType; }
+        public void setExtension(String extension) { this.extension = extension; }
+        public void setDateTime(String dateTime) { this.dateTime = dateTime; }
+        public void setTimeZone(String timeZone) { this.timeZone = timeZone; }
+        public void setGPSLatitude(String gpsLatitude) { this.gpsLatitude = gpsLatitude; }
+        public void setGPSLongitude(String gpsLongitude) { this.gpsLongitude = gpsLongitude; }
+        public void setIsWritable(Boolean isWritable) { this.isWritable = isWritable; }
+        public void setIsPhotoFormat(Boolean isPhotoFormat) { this.isPhotoFormat = isPhotoFormat; }
     }
 
     public ReadConfigYaml(String configFile) throws Exception {

@@ -62,15 +62,15 @@ public class ReadTimeLineYaml {
         public String getInstructions() { return instructions; }
         public Boolean getOverride() { return override; }
 
-        void setStartDate(String startDate) throws ParseException {
+        public void setStartDate(String startDate) throws ParseException {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             this.startDate = LocalDateTime.parse(startDate, formatter);
         }
 
-        void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
-        void setTitle(String title) { this.title = title; }
+        public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
+        public void setTitle(String title) { this.title = title; }
 
-        void setCountryCode(String countryCode) throws Exception {
+        public void setCountryCode(String countryCode) throws Exception {
             Locale obj = new Locale("", countryCode);
             try {
                 String code = obj.getISO3Country();
@@ -81,18 +81,18 @@ public class ReadTimeLineYaml {
             this.countryCode = obj.getCountry();
         }
 
-        void setCountry(String country) { this.country = country; }
-        void setProvince(String province) { this.province = province; }
-        void setCity(String city) { this.city = city; }
-        void setLocation(String location) { this.location = location; }
-        void setDescription(String description) { this.description = description; }
-        void setAuthor(String author) { this.author = author; }
-        void setWebsite(String website) { this.website = website; }
-        void setCopyRight(String copyright) { this.copyright = copyright; }
-        void setComment(String comment) { this.comment = comment; }
-        void setKeys(String keys) { this.keys = keys; }
-        void setInstructions(String instructions) { this.instructions = instructions; }
-        void setOverride(Boolean override) { this.override = override; }
+        public void setCountry(String country) { this.country = country; }
+        public void setProvince(String province) { this.province = province; }
+        public void setCity(String city) { this.city = city; }
+        public void setLocation(String location) { this.location = location; }
+        public void setDescription(String description) { this.description = description; }
+        public void setAuthor(String author) { this.author = author; }
+        public void setWebsite(String website) { this.website = website; }
+        public void setCopyRight(String copyright) { this.copyright = copyright; }
+        public void setComment(String comment) { this.comment = comment; }
+        public void setKeys(String keys) { this.keys = keys; }
+        public void setInstructions(String instructions) { this.instructions = instructions; }
+        public void setOverride(Boolean override) { this.override = override; }
     }
 
     class SortByDate implements Comparator<TimeLine> {

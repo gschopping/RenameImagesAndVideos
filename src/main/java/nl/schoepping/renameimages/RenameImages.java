@@ -57,7 +57,7 @@ public class RenameImages {
             ReadTimeLineYaml readTimeLine = new ReadTimeLineYaml(timelineFile);
             if (readTimeLine.getEnabled()) {
                 System.out.println("timeline is enabled");
-                ReadTimeLineYaml.TimeLine timeline = readTimeLine.getTimeLine(LocalDateTime.of(2019, 4, 25, 13, 45, 23));
+                ReadTimeLineYaml.TimeLine timeline = readTimeLine.getTimeLine(LocalDateTime.of(2019, 8, 11, 18, 36, 31));
                 System.out.println("StartDate: " + timeline.getStartDate());
                 System.out.println("EndDate: " + timeline.getEndDate());
                 System.out.println("Title: " + timeline.getTitle());
@@ -78,6 +78,10 @@ public class RenameImages {
                     ReadExif readExif = new ReadExif(readConfigYaml, file.getPath());
                     System.out.println("==== " + file.getName() + " ====");
                     System.out.println("CreateDateTime: " + readExif.getCreateDateTime());
+                    timeline = readTimeLine.getTimeLine(readExif.getCreateDateTime());
+                    if (timeline != null) {
+                        System.out.println("Description: " + timeline.getDescription());
+                    }
                 }
                 log.info("Configuration file:\t{}", configFile);
                 log.info("Timeline file:\t{}", timelineFile);

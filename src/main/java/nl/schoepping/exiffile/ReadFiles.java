@@ -78,7 +78,7 @@ public class ReadFiles {
         return result;
     }
 
-    List<File> getGPSDirectories() {
+    public List<File> getGPSDirectories() {
         File dir = new File(this.path);
         File[] files = dir.listFiles(File::isDirectory);
         List<File> result = new ArrayList<>();
@@ -93,7 +93,7 @@ public class ReadFiles {
         return result;
     }
 
-    List<File> getTimelapsFiles(File dirTimelaps) {
+    public List<File> getTimelapsFiles(File dirTimelaps) {
         File dir = new File(dirTimelaps.getPath());
         File[] files = dir.listFiles();
         List<File> result = new ArrayList<>();
