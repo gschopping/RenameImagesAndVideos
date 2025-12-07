@@ -15,20 +15,12 @@ public class RenameImages {
 
     static void main(String[] args) {
         // handle arguments
-        Options options = new Options();
-        options.addOption("c", "config", true, "configuration yaml file");
-        options.addOption("t", "timeline", true, "timeline yaml file");
-        options.addOption("d", "directory", true, "start directory");
-        options.addOption("l", "logconfig", true, "configuration of the log file");
-
-        CommandLineParser parser = new DefaultParser();
 
         try {
-            CommandLine cmd = parser.parse(options, args);
-            String configFile = cmd.getOptionValue("config");
-            String timelineFile = cmd.getOptionValue("timeline");
-            String startDirectory = cmd.getOptionValue("directory");
-            String logConfigFile = cmd.getOptionValue("logconfig");
+            String configFile = "config/config.yml";
+            String timelineFile = "config/start.yml";
+            String startDirectory = "files";
+            String logConfigFile = "config/log4j.properties";
             ReadConfigYaml readConfigYaml = new ReadConfigYaml(configFile);
 
             System.out.println("Home directory: " + System.getProperty("user.dir"));
@@ -54,40 +46,40 @@ public class RenameImages {
                 System.out.println("Filetype not found");
             }
 
-            ReadTimeLineYaml readTimeLine = new ReadTimeLineYaml(timelineFile);
-            if (readTimeLine.getEnabled()) {
-                System.out.println("timeline is enabled");
-                ReadTimeLineYaml.TimeLine timeline = readTimeLine.getTimeLine(LocalDateTime.of(2019, 8, 11, 18, 36, 31));
-                System.out.println("StartDate: " + timeline.getStartDate());
-                System.out.println("EndDate: " + timeline.getEndDate());
-                System.out.println("Title: " + timeline.getTitle());
-                System.out.println("Creator: " + timeline.getAuthor());
-                System.out.println("Website: " + timeline.getWebsite());
-                System.out.println("Copyright: " + timeline.getCopyright());
-                System.out.println("Countrycode: " + timeline.getCountryCode());
-                System.out.println("Country: " + timeline.getCountry());
-                System.out.println("Province: " + timeline.getProvince());
-                System.out.println("City: " + timeline.getCity());
-                System.out.println("Location: " + timeline.getLocation());
-                System.out.println("Description: " + timeline.getDescription());
-                System.out.println("Override: " + timeline.getOverride());
-                System.out.println("Keys: " + timeline.getKeys());
-
-                ReadFiles readFiles = new ReadFiles(readConfigYaml, startDirectory);
-                for (File file : readFiles.getFilesFromDirectory()) {
-                    ReadExif readExif = new ReadExif(readConfigYaml, file.getPath());
-                    System.out.println("==== " + file.getName() + " ====");
-                    System.out.println("CreateDateTime: " + readExif.getCreateDateTime());
-                    timeline = readTimeLine.getTimeLine(readExif.getCreateDateTime());
-                    if (timeline != null) {
-                        System.out.println("Description: " + timeline.getDescription());
-                    }
-                }
-                log.info("Configuration file:\t{}", configFile);
-                log.info("Timeline file:\t{}", timelineFile);
-                log.info("Start directory:\t{}", startDirectory);
-                log.info("Home directory:\t{}", System.getProperty("user.dir"));
-            }
+//            ReadTimeLineYaml readTimeLine = new ReadTimeLineYaml(timelineFile);
+//            if (readTimeLine.getEnabled()) {
+//                System.out.println("timeline is enabled");
+//                ReadTimeLineYaml.TimeLine timeline = readTimeLine.getTimeLine(LocalDateTime.of(2019, 8, 11, 18, 36, 31));
+//                System.out.println("StartDate: " + timeline.getStartDate());
+//                System.out.println("EndDate: " + timeline.getEndDate());
+//                System.out.println("Title: " + timeline.getTitle());
+//                System.out.println("Creator: " + timeline.getAuthor());
+//                System.out.println("Website: " + timeline.getWebsite());
+//                System.out.println("Copyright: " + timeline.getCopyright());
+//                System.out.println("Countrycode: " + timeline.getCountryCode());
+//                System.out.println("Country: " + timeline.getCountry());
+//                System.out.println("Province: " + timeline.getProvince());
+//                System.out.println("City: " + timeline.getCity());
+//                System.out.println("Location: " + timeline.getLocation());
+//                System.out.println("Description: " + timeline.getDescription());
+//                System.out.println("Override: " + timeline.getOverride());
+//                System.out.println("Keys: " + timeline.getKeys());
+//
+//                ReadFiles readFiles = new ReadFiles(readConfigYaml, startDirectory);
+//                for (File file : readFiles.getFilesFromDirectory()) {
+//                    ReadExif readExif = new ReadExif(readConfigYaml, file.getPath());
+//                    System.out.println("==== " + file.getName() + " ====");
+//                    System.out.println("CreateDateTime: " + readExif.getCreateDateTime());
+//                    timeline = readTimeLine.getTimeLine(readExif.getCreateDateTime());
+//                    if (timeline != null) {
+//                        System.out.println("Description: " + timeline.getDescription());
+//                    }
+//                }
+//                log.info("Configuration file:\t{}", configFile);
+//                log.info("Timeline file:\t{}", timelineFile);
+//                log.info("Start directory:\t{}", startDirectory);
+//                log.info("Home directory:\t{}", System.getProperty("user.dir"));
+//            }
 
         } catch (Exception e) {
             log.error(e.getMessage());

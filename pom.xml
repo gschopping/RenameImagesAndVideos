@@ -14,6 +14,41 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <!-- Provides an execution to unzip the packaged JAR for use in a Docker image -->
+                        <id>unzip-assembly-for-docker</id>
+                        <configuration>
+                            <executable>unzip</executable>
+                            <arguments>
+                                <argument>-quo</argument> <!-- quiet, update, overwrite -->
+                                <argument>target/${project.build.finalName}-jar-with-dependencies.jar</argument>
+                                <argument>-d</argument>
+                                <argument>target/docker-image-target</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
         <dependency>
